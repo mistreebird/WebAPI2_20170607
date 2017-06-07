@@ -12,19 +12,20 @@ using WebAPI2_20170607.Models;
 
 namespace WebAPI2_20170607.Controllers
 {
+    [RoutePrefix("Clients")]
     public class ClientsController : ApiController
     {
         private FabricsEntities db = new FabricsEntities();
 
         // GET: api/Clients
-        [Route("clients")]
+        [Route("")]
         public IQueryable<Client> GetClient()
         {
             return db.Client;
         }
 
         // GET: api/Clients/5
-        [Route("clients/{id}")]
+        [Route("{id}")]
         [ResponseType(typeof(Client))]
         public IHttpActionResult GetClient(int id)
         {
@@ -38,7 +39,7 @@ namespace WebAPI2_20170607.Controllers
         }
 
         // GET: api/Clients/5/Orders
-        [Route("clients/{id}/Orders")]
+        [Route("{id}/Orders")]
         public IHttpActionResult GetClientOrders(int id)
         {
             var Order = db.Order.Where(o => o.ClientId == id);
@@ -51,7 +52,7 @@ namespace WebAPI2_20170607.Controllers
         }
 
         // GET: api/Clients/5/Orders
-        [Route("clients/{id}/Orders/{orderId:int}")]
+        [Route("{id}/Orders/{orderId:int}")]
         public IHttpActionResult GetClientOrders(int id,int orderId)
         {
             var Order = db.Order.Where(o => o.ClientId == id && o.OrderId == orderId);
@@ -63,7 +64,7 @@ namespace WebAPI2_20170607.Controllers
             return Ok(Order);
         }
 
-        [Route("clients/{id}/Orders/Pending")]
+        [Route("~/api/clients/{id}/Orders/Pending")]
         public IHttpActionResult GetClientOrdersPending(int id)
         {
             var Order = db.Order.Where(o => o.ClientId == id && o.OrderStatus == "P");
@@ -75,7 +76,7 @@ namespace WebAPI2_20170607.Controllers
             return Ok(Order);
         }
 
-        [Route("clients/{id}/Orders/{*date:datetime}")]
+        [Route("{id}/Orders/{*date:datetime}")]
         public IHttpActionResult GetClientOrders(int id, DateTime date)
         {
             var Order = db.Order.Where(o => o.ClientId == id
