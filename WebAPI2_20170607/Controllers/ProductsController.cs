@@ -70,6 +70,43 @@ namespace WebAPI2_20170607.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        // PATCH: api/Products/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PatchProduct(int id, ProductPatchModel product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != product.ProductId)
+            {
+                return BadRequest();
+            }
+
+            var item = db.Product.Find(id);
+            item.ProductName = product.ProductName;
+            item.Price = product.Price;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
         // POST: api/Products
         [ResponseType(typeof(Product))]
         public IHttpActionResult PostProduct(Product product)
