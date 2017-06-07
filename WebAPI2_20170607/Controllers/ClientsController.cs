@@ -51,7 +51,7 @@ namespace WebAPI2_20170607.Controllers
         }
 
         // GET: api/Clients/5/Orders
-        [Route("clients/{id}/Orders/{orderId}")]
+        [Route("clients/{id}/Orders/{orderId:int}")]
         public IHttpActionResult GetClientOrders(int id,int orderId)
         {
             var Order = db.Order.Where(o => o.ClientId == id && o.OrderId == orderId);
@@ -75,7 +75,7 @@ namespace WebAPI2_20170607.Controllers
             return Ok(Order);
         }
 
-        [Route("clients/{id}/Orders/{*date}")]
+        [Route("clients/{id}/Orders/{*date:datetime}")]
         public IHttpActionResult GetClientOrders(int id, DateTime date)
         {
             var Order = db.Order.Where(o => o.ClientId == id
