@@ -77,8 +77,9 @@ namespace WebAPI2_20170607.Controllers
         {
             if (id != product.ProductId)
             {
-                return BadRequest();
+                throw new Exception("id不要亂帶");
             }
+
 
             var item = db.Product.Find(id);
             item.ProductName = product.ProductName;
