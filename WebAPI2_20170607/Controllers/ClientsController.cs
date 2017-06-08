@@ -54,6 +54,41 @@ namespace WebAPI2_20170607.Controllers
             return Json(client);
         }
 
+        [Route("type4/{id}")]
+        public HttpResponseMessage GetClientType4(int id)
+        {
+            Client client = db.Client.Find(id);
+
+            return Request.CreateResponse(HttpStatusCode.OK,client);
+        }
+
+        [Route("type5/{id}")]
+        public HttpResponseMessage GetClientType5(int id)
+        {
+            Client client = db.Client.Find(id);
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new ObjectContent<Client>(client, GlobalConfiguration.Configuration.Formatters.JsonFormatter)
+            };
+        }
+
+        [Route("type6/{id}")]
+        public HttpResponseMessage GetClientType6(int id)
+        {
+            Client client = db.Client.Find(id);
+
+            var response = new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new ObjectContent<Client>(client, GlobalConfiguration.Configuration.Formatters.JsonFormatter),
+                ReasonPhrase = "Hello World"
+            };
+            response.Headers.Add("aaaa", "bbb");
+            return response;
+        }
+
         // GET: api/Clients/5/Orders
         [Route("{id}/Orders")]
         public IHttpActionResult GetClientOrders(int id)
