@@ -9,9 +9,11 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebAPI2_20170607.Models;
+using System.Web.Http.Cors;
 
 namespace WebAPI2_20170607.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [ValidateModel]
     public class ProductsController : ApiController
     {
